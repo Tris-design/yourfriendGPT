@@ -1,0 +1,139 @@
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Химийн Холбооны Тооцоологч</title>
+    <style>
+        body {
+            background-color: #004080;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A); /* Green gradient for chemical bond calculator */
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            width: 800px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        input, button, select {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 18px;
+            width: 100%;
+        }
+        .output {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .nav {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            padding: 10px;
+            background: #162e52;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html">Буцах</a>
+    </div>
+    <div class="container">
+        <h1 class="title">Химийн Холбооны Тооцоологч</h1>
+        <p>Тооцоолох үйлдлээ сонгоно уу.</p>
+        <select id="operation">
+            <option value="bond_type">Холбооны төрөл тодорхойлох</option>
+            <option value="valence_electrons">Валентын электрон тооцоолох</option>
+            <option value="lewis_structure">Lewis бүтэц</option>
+        </select>
+        <input type="text" id="inputData" placeholder="Химийн томъёо оруулна уу (жишээ: H2O, NaCl)">
+        <button onclick="calculate()">Тооцоолох</button>
+        <div class="output" id="result"></div>
+    </div>
+    <script>
+        function calculate() {
+            let operation = document.getElementById('operation').value;
+            let input = document.getElementById('inputData').value.trim();
+            let resultText = "";
+
+            if (!input) {
+                resultText = "Химийн томъёо оруулна уу!";
+            } else {
+                if (operation === "bond_type") {
+                    resultText = determineBondType(input);
+                } else if (operation === "valence_electrons") {
+                    resultText = calculateValenceElectrons(input);
+                } else if (operation === "lewis_structure") {
+                    resultText = explainLewisStructure(input);
+                }
+            }
+
+            document.getElementById('result').innerText = resultText;
+        }
+
+        function determineBondType(compound) {
+            const ionicBonds = ["NaCl", "KBr", "MgO", "CaF2"];
+            const covalentBonds = ["H2O", "CO2", "NH3", "CH4", "O2"];
+            
+            if (ionicBonds.includes(compound)) {
+                return `🔬 ${compound} нь **Ион холбоо** бүхий нэгдэл юм. (Металл + Металл бус)`;
+            } else if (covalentBonds.includes(compound)) {
+                return `🔬 ${compound} нь **Ковалент холбоо** бүхий нэгдэл юм. (Металл бус + Металл бус)`;
+            } else {
+                return `⚠️ Холбооны төрлийг тодорхойлох боломжгүй.`;
+            }
+        }
+
+        function calculateValenceElectrons(compound) {
+            const valenceElectrons = {
+                "H": 1, "O": 6, "N": 5, "C": 4, "Cl": 7, "Na": 1, "Mg": 2
+            };
+            let sum = 0;
+            let elements = compound.match(/[A-Z][a-z]?/g);
+
+            if (!elements) return "⚠️ Химийн томъёог зөв оруулна уу!";
+
+            elements.forEach(el => {
+                if (valenceElectrons[el] !== undefined) {
+                    sum += valenceElectrons[el];
+                }
+            });
+
+            return `🔬 ${compound}-ийн нийт валентын электрон: **${sum}**`;
+        }
+
+        function explainLewisStructure(compound) {
+            const lewisStructures = {
+                "H2O": "H-O-H (2 электрон хос)",
+                "CO2": "O=C=O (давхар холбоо)",
+                "NH3": "H-N-H (нэг электрон хос)",
+                "CH4": "H-C-H (бүх талдаа нэг холбоо)",
+                "O2": "O=O (давхар холбоо)"
+            };
+
+            return lewisStructures[compound] ? `🧪 ${compound}-ийн Lewis бүтэц: **${lewisStructures[compound]}**` : "⚠️ Lewis бүтцийг тодорхойлж чадсангүй!";
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Статистикийн Тооцоологч</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #74b9ff, #a4d7f7); /* Light Sky Blue to Cloud White */
+            color: white;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background: linear-gradient(135deg, #3498db, #5dade2); /* Sky Blue to Soft Blue */
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            width: 700px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #f39c12; /* Bright gold for title */
+            text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
+        }
+        input, button, select {
+            margin-top: 15px;
+            padding: 12px;
+            font-size: 18px;
+            width: 100%;
+            border-radius: 8px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        input:focus, button:focus {
+            outline: none;
+            box-shadow: 0 0 5px 3px #f39c12; /* Gold glow on focus */
+        }
+        button {
+            background-color: #f39c12; /* Gold color for buttons */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #ffb84d; /* Slightly darker gold on hover */
+        }
+        .output {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            transition: opacity 0.3s ease;
+        }
+        .nav {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            padding: 10px;
+            background: #3498db; /* Sky blue for navigation */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .nav a:hover {
+            background-color: #f39c12; /* Gold on hover */
+        }
+        .container:hover {
+            transform: scale(1.05); /* Hover effect on the container */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html">Буцах</a>
+    </div>
+    <div class="container">
+        <h1>Статистикийн Тооцоологч</h1>
+        <p>Тоо оруулна уу (комаар тусгаарлана уу)</p>
+        <input type="text" id="numbers" placeholder="Тоо оруулна уу">
+        
+        <p>Тооцоолох хэмжүүр сонгоно уу:</p>
+        <select id="measureType">
+            <option value="mean">Арьметик дундаж</option>
+            <option value="median">Медиан</option>
+            <option value="mode">Мода</option>
+            <option value="range">Далайц</option>
+        </select>
+        
+        <button onclick="calculate()">Тооцоолох</button>
+        
+        <div class="output" id="result"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            let numbers = document.getElementById('numbers').value.split(',').map(num => parseFloat(num.trim()));
+            let result;
+            
+            // Шалгах: тоонууд зөв эсэх
+            if (numbers.some(isNaN)) {
+                result = 'Тоо зөв бичигдсэн эсэхийг шалгана уу.';
+                document.getElementById('result').innerText = result;
+                return;
+            }
+
+            // Хэмжүүрийн төрлийг авах
+            let measureType = document.getElementById('measureType').value;
+
+            if (measureType === 'mean') {
+                result = calculateMean(numbers);
+            } else if (measureType === 'median') {
+                result = calculateMedian(numbers);
+            } else if (measureType === 'mode') {
+                result = calculateMode(numbers);
+            } else if (measureType === 'range') {
+                result = calculateRange(numbers);
+            }
+
+            // Үр дүнг харуулах
+            document.getElementById('result').innerHTML = result;
+        }
+
+        // Арьметик дундаж (Mean) тооцох
+        function calculateMean(numbers) {
+            let sum = numbers.reduce((a, b) => a + b, 0);
+            let mean = sum / numbers.length;
+            return `Арьметик дундаж: ${mean.toFixed(2)}`;
+        }
+
+        // Медиан (Median) тооцох
+        function calculateMedian(numbers) {
+            numbers.sort((a, b) => a - b);
+            let median;
+            if (numbers.length % 2 === 0) {
+                median = (numbers[numbers.length / 2 - 1] + numbers[numbers.length / 2]) / 2;
+            } else {
+                median = numbers[Math.floor(numbers.length / 2)];
+            }
+            return `Медиан: ${median}`;
+        }
+
+        // Мода (Mode) тооцох
+        function calculateMode(numbers) {
+            let modeMap = {};
+            let maxCount = 0;
+            let mode = [];
+            for (let num of numbers) {
+                modeMap[num] = (modeMap[num] || 0) + 1;
+                if (modeMap[num] > maxCount) {
+                    maxCount = modeMap[num];
+                    mode = [num];
+                } else if (modeMap[num] === maxCount) {
+                    mode.push(num);
+                }
+            }
+            return `Мода: ${mode.join(', ')}`;
+        }
+
+        // Далайц (Range) тооцох
+        function calculateRange(numbers) {
+            numbers.sort((a, b) => a - b);
+            let range = numbers[numbers.length - 1] - numbers[0];
+            return `Далайц: ${range}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Органик Химийн Тооцоологч</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #74b9ff, #a4d7f7); /* Light Sky Blue to Cloud White */
+            color: white;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background: linear-gradient(135deg, #3498db, #5dade2); /* Sky Blue to Soft Blue */
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            width: 700px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #f39c12; /* Bright gold for title */
+            text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
+        }
+        input, button, select {
+            margin-top: 15px;
+            padding: 12px;
+            font-size: 18px;
+            width: 100%;
+            border-radius: 8px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        input:focus, button:focus, select:focus {
+            outline: none;
+            box-shadow: 0 0 5px 3px #f39c12; /* Gold glow on focus */
+        }
+        button {
+            background-color: #f39c12; /* Gold color for buttons */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #ffb84d; /* Slightly darker gold on hover */
+        }
+        .output {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            transition: opacity 0.3s ease;
+        }
+        .nav {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            padding: 10px;
+            background: #3498db; /* Sky blue for navigation */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .nav a:hover {
+            background-color: #f39c12; /* Gold on hover */
+        }
+        .container:hover {
+            transform: scale(1.05); /* Hover effect on the container */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html">Буцах</a>
+    </div>
+    <div class="container">
+        <h1>Органик Химийн Тооцоологч</h1>
+        <p>Тооцоолох үйлдлээ сонгоно уу.</p>
+        <select id="operation">
+            <option value="molecular_mass">Молекул масс</option>
+            <option value="balance_equation">Урвал тэнцвэржүүлэх</option>
+            <option value="functional_group">Функциональ бүлэг тодорхойлох</option>
+        </select>
+        <input type="text" id="inputData" placeholder="Химийн томъёо оруулна уу">
+        <button onclick="calculate()">Тооцоолох</button>
+        <div class="output" id="result"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.5.0/math.min.js"></script>
+    <script>
+        function calculate() {
+            let operation = document.getElementById('operation').value;
+            let input = document.getElementById('inputData').value.trim();
+            let resultText = "";
+
+            if (!input) {
+                resultText = "Химийн томъёо эсвэл урвал оруулна уу!";
+            } else {
+                if (operation === "molecular_mass") {
+                    resultText = calculateMolecularMass(input);
+                } else if (operation === "balance_equation") {
+                    resultText = balanceEquation(input);
+                } else if (operation === "functional_group") {
+                    resultText = identifyFunctionalGroup(input);
+                }
+            }
+
+            document.getElementById('result').innerText = resultText;
+        }
+
+        function calculateMolecularMass(formula) {
+            try {
+                let mass = math.evaluate('molecularWeight("' + formula + '")');
+                return `Молекул масс: ${mass.toFixed(2)} g/mol`;
+            } catch (e) {
+                return "Алдаа: Томъёог шалгана уу!";
+            }
+        }
+
+        function balanceEquation(equation) {
+            return "⚠️ Энэ функц хөгжүүлэлт хийгдэж байна!";
+        }
+
+        function identifyFunctionalGroup(molecule) {
+            const groups = {
+                "OH": "Спирт (Hydroxyl group)",
+                "COOH": "Карбон хүчил (Carboxyl group)",
+                "NH2": "Амин (Amine group)",
+                "C=O": "Кетон (Carbonyl group)",
+                "CHO": "Альдегид (Aldehyde group)",
+                "O": "Этер (Ether group)"
+            };
+            for (let key in groups) {
+                if (molecule.includes(key)) {
+                    return `Функциональ бүлэг: ${groups[key]}`;
+                }
+            }
+            return "Функциональ бүлэг олдсонгүй!";
+        }
+    </script>
+</body>
+</html>
+

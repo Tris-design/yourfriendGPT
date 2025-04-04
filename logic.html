@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Логик Тооцоологч</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #74b9ff, #a4d7f7); /* Light Sky Blue to Cloud White */
+            color: white;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background: linear-gradient(135deg, #3498db, #5dade2); /* Sky Blue to Soft Blue */
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            width: 700px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #f39c12; /* Bright gold for title */
+            text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
+        }
+        input, button, select {
+            margin-top: 15px;
+            padding: 12px;
+            font-size: 18px;
+            width: 100%;
+            border-radius: 8px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        input:focus, button:focus {
+            outline: none;
+            box-shadow: 0 0 5px 3px #f39c12; /* Gold glow on focus */
+        }
+        button {
+            background-color: #f39c12; /* Gold color for buttons */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #ffb84d; /* Slightly darker gold on hover */
+        }
+        .output {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            transition: opacity 0.3s ease;
+        }
+        .nav {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            padding: 10px;
+            background: #3498db; /* Sky blue for navigation */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .nav a:hover {
+            background-color: #f39c12; /* Gold on hover */
+        }
+        .container:hover {
+            transform: scale(1.05); /* Hover effect on the container */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html">Буцах</a>
+    </div>
+    <div class="container">
+        <h1>Логик Тооцоологч</h1>
+        <p>Логик үйлдлийг сонгоно уу.</p>
+        <select id="operation">
+            <option value="AND">AND (Үйлдэл)</option>
+            <option value="OR">OR (Үйлдэл)</option>
+            <option value="NOT">NOT (Үйлдэл)</option>
+            <option value="XOR">XOR (Үйлдэл)</option>
+        </select>
+        <div id="inputs">
+            <input type="text" id="input1" placeholder="Эхний логик утга (0 эсвэл 1)" />
+            <input type="text" id="input2" placeholder="Хоёрдугаар логик утга (0 эсвэл 1)" />
+        </div>
+        <button onclick="calculate()">Тооцоолох</button>
+        <div class="output" id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('operation').addEventListener('change', updateInputs);
+
+        function updateInputs() {
+            let operation = document.getElementById('operation').value;
+            let inputs = document.getElementById('inputs');
+
+            if (operation === "NOT") {
+                inputs.innerHTML = ` 
+                    <input type="text" id="input1" placeholder="Логик утга (0 эсвэл 1)" />
+                `;
+            } else {
+                inputs.innerHTML = `
+                    <input type="text" id="input1" placeholder="Эхний логик утга (0 эсвэл 1)" />
+                    <input type="text" id="input2" placeholder="Хоёрдугаар логик утга (0 эсвэл 1)" />
+                `;
+            }
+        }
+
+        function calculate() {
+            let operation = document.getElementById('operation').value;
+            let input1 = parseInt(document.getElementById('input1').value);
+            let result;
+
+            if (operation === "NOT") {
+                if (input1 !== 0 && input1 !== 1) {
+                    result = "Хэрэглэгч зөвхөн 0 эсвэл 1 оруулна уу!";
+                } else {
+                    result = `NOT ${input1} = ${input1 === 0 ? 1 : 0}`;
+                }
+            } else {
+                let input2 = parseInt(document.getElementById('input2').value);
+                if ((input1 !== 0 && input1 !== 1) || (input2 !== 0 && input2 !== 1)) {
+                    result = "Хэрэглэгч зөвхөн 0 эсвэл 1 оруулна уу!";
+                } else {
+                    switch (operation) {
+                        case "AND":
+                            result = `AND(${input1}, ${input2}) = ${input1 & input2}`;
+                            break;
+                        case "OR":
+                            result = `OR(${input1}, ${input2}) = ${input1 | input2}`;
+                            break;
+                        case "XOR":
+                            result = `XOR(${input1}, ${input2}) = ${input1 ^ input2}`;
+                            break;
+                        default:
+                            result = "Алдаа: Үйлдэл сонгоно уу!";
+                    }
+                }
+            }
+
+            document.getElementById('result').innerText = result;
+        }
+    </script>
+</body>
+</html>
+

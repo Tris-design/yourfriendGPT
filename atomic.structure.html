@@ -1,0 +1,131 @@
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Атомын Бүтэц Тодорхойлогч</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a1b9a, #008080); /* Purple to Teal Gradient for Balance */
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background: linear-gradient(135deg, #283593, #00acc1); /* Deep Blue to Aqua for a balanced feel */
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            width: 700px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Slight shadow for a modern touch */
+        }
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #f39c12; /* Bright gold for title contrast */
+        }
+        input, button {
+            margin-top: 10px;
+            padding: 12px;
+            font-size: 18px;
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #00acc1; /* Soft teal border for input and button */
+        }
+        input:focus, button:focus {
+            outline: none;
+            box-shadow: 0 0 5px 3px #f39c12; /* Focus effect with gold */
+        }
+        button {
+            background-color: #f39c12; /* Bright gold for buttons */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #ffb84d; /* Darker gold on hover */
+        }
+        .output {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff; /* White text for output */
+        }
+        .nav {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            padding: 10px;
+            background: #283593; /* Deep blue for navigation */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .nav a:hover {
+            background-color: #f39c12; /* Gold on hover for nav link */
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html">Буцах</a>
+    </div>
+    <div class="container">
+        <h1 class="title">Атомын Бүтэц Тодорхойлогч</h1>
+        <p>Элементийн атомын дугаарыг оруулна уу.</p>
+        <input type="number" id="atomicNumber" placeholder="Атомын дугаар (жишээ: 8)">
+        <button onclick="calculateAtomicStructure()">Тооцоолох</button>
+        <div class="output" id="result"></div>
+    </div>
+
+    <script>
+        function calculateAtomicStructure() {
+            let atomicNumber = parseInt(document.getElementById('atomicNumber').value);
+            if (isNaN(atomicNumber) || atomicNumber < 1 || atomicNumber > 118) {
+                document.getElementById('result').innerText = "⚠️ Атомын дугаарыг зөв оруулна уу (1-118 хооронд)!";
+                return;
+            }
+
+            // Нейтроны тоог ойролцоогоор тооцоолох
+            let neutronCount = Math.round(atomicNumber * 1.1);
+            let electronConfig = getElectronConfiguration(atomicNumber);
+
+            let resultText = `⚛️ **Элементийн Атомын Бүтэц**:
+            🔹 **Протон**: ${atomicNumber}
+            🔹 **Нейтрон**: ${neutronCount}
+            🔹 **Электрон**: ${atomicNumber}
+            🔹 **Электрон давхарга**: ${electronConfig}`;
+
+            document.getElementById('result').innerText = resultText;
+        }
+
+        function getElectronConfiguration(atomicNumber) {
+            let shells = [2, 8, 18, 32, 32, 18, 8]; 
+            let config = [];
+            let remainingElectrons = atomicNumber;
+
+            for (let i = 0; i < shells.length; i++) {
+                if (remainingElectrons > shells[i]) {
+                    config.push(shells[i]);
+                    remainingElectrons -= shells[i];
+                } else {
+                    config.push(remainingElectrons);
+                    break;
+                }
+            }
+
+            return config.join("-");
+        }
+    </script>
+</body>
+</html>
+

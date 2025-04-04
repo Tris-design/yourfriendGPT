@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Эзлэхүүн Тооцоологч</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #74b9ff, #a4d7f7); /* Light Sky Blue to Cloud White */
+            color: white;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background: linear-gradient(135deg, #3498db, #5dade2); /* Sky Blue to Soft Blue */
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            width: 700px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #f39c12; /* Bright gold for title */
+            text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
+        }
+        input, button {
+            margin-top: 15px;
+            padding: 12px;
+            font-size: 18px;
+            width: 100%;
+            border-radius: 8px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        input:focus, button:focus {
+            outline: none;
+            box-shadow: 0 0 5px 3px #f39c12; /* Gold glow on focus */
+        }
+        button {
+            background-color: #f39c12; /* Gold color for buttons */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #ffb84d; /* Slightly darker gold on hover */
+        }
+        .output {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            transition: opacity 0.3s ease;
+        }
+        .nav {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            padding: 10px;
+            background: #3498db; /* Sky blue for navigation */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .nav a:hover {
+            background-color: #f39c12; /* Gold on hover */
+        }
+        .container:hover {
+            transform: scale(1.05); /* Hover effect on the container */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html">Буцах</a>
+    </div>
+    <div class="container">
+        <h1>Эзлэхүүн Тооцоологч</h1>
+        <p>Масс ба нягт оруулж, эзлэхүүнийг тооцоолно уу.</p>
+        <input type="number" id="mass" placeholder="Масс (кг)">
+        <input type="number" id="density" placeholder="Нягт (кг/м³)">
+        <button onclick="calculateVolume()">Тооцоолох</button>
+        <div class="output" id="result"></div>
+    </div>
+
+    <script>
+        function calculateVolume() {
+            let mass = parseFloat(document.getElementById('mass').value);
+            let density = parseFloat(document.getElementById('density').value);
+            if (!isNaN(mass) && !isNaN(density) && density !== 0) {
+                let volume = mass / density;
+                document.getElementById('result').innerText = `Эзлэхүүн: ${volume.toFixed(2)} м³`;
+            } else {
+                document.getElementById('result').innerText = 'Зөв утга оруулна уу!';
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
