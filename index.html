@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UR FriendGPT</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #F39C12, #8E44AD);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            background: linear-gradient(135deg, #F39C12, #F1C40F); /* Bright golden gradient */
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            width: 1100px;
+            height: 550px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            position: relative;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #fff;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .grid {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 30px;
+        }
+        .column {
+            width: 30%;
+            text-align: center;
+        }
+        .dropdown {
+            background: #fff;
+            color: #333;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .dropdown:hover {
+            background-color: #F39C12; /* Gold hover color */
+            color: #fff;
+            transform: translateY(-3px); /* Lift effect */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        .dropdown::after {
+            content: '\25BC'; /* Dropdown arrow */
+            margin-left: 10px;
+            font-size: 16px;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #F39C12; /* Bright golden color for dropdown */
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+        .dropdown-content div {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .dropdown-content div:hover {
+            background-color: #FFB84D; /* Lighter gold on hover */
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .image-container {
+            position: absolute;
+            top: -40px;
+            right: 30px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #F39C12; /* Gold border */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="title">Чамд ямар тусламж хэрэгтэй байна андаа?</div>
+        <!-- Image Container with Albert image -->
+        <div class="image-container">
+            <img src="albert.jpg" alt="Person Image">
+        </div>
+        <div class="grid">
+            <div class="column">
+                <div class="dropdown">Бүхний хаан Математик
+                    <div class="dropdown-content">
+                        <div onclick="navigateTo('calculus.html')">Калькулус</div>
+                        <div onclick="navigateTo('algebra.html')">Алгебр</div>
+                        <div onclick="navigateTo('geometry.html')">Геометр</div>
+                        <div onclick="navigateTo('logic.html')">Логик</div>
+                        <div onclick="navigateTo('statistic.html')">Статистик</div>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="dropdown">Хэцүү мөртлөө сонирхолтой Физик
+                    <div class="dropdown-content">
+                        <div onclick="navigateTo('density.html')">Нягт</div>
+                        <div onclick="navigateTo('mass.html')">Масс</div>
+                        <div onclick="navigateTo('volume.html')">Эзлэхүүн</div>
+                        <div onclick="navigateTo('relativity.html')">General Relativity</div>
+                    </div>
+                </div> 
+            </div>
+            <div class="column">
+                <div class="dropdown">Амархан ч бидний айдас Хими
+                    <div class="dropdown-content">
+                        <div onclick="navigateTo('organic.chemistry.html')">Organic Chemistry</div>
+                        <div onclick="navigateTo('chemical.bonding.html')">Chemical Bonding</div>
+                        <div onclick="navigateTo('state.of.matter.html')">State of Matter</div>
+                        <div onclick="navigateTo('atomic.structure.html')">Atomic Structure</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
